@@ -1,0 +1,5 @@
+quixstreams==2.5
+python-dotenv
+weaviate-client==3.26.2
+langchain==0.1.9
+langchain-community==0.0.24

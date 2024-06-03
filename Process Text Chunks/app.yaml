@@ -1,0 +1,31 @@
+name: Process Text Chunks
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: Name of the input topic to listen to.
+    defaultValue: transcriptions
+    required: false
+  - name: output
+    inputType: OutputTopic
+    description: Name of the output topic to write to.
+    defaultValue: trashcan
+    required: false
+  - name: chunksize
+    inputType: FreeText
+    description: ''
+    defaultValue: 1001
+    required: false
+  - name: overlapsize
+    inputType: FreeText
+    description: ''
+    defaultValue: 200
+    required: false
+  - name: groupname
+    inputType: FreeText
+    description: ''
+    defaultValue: chunkster-v1b
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py

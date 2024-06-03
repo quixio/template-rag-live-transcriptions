@@ -1,0 +1,36 @@
+name: Ingest Embeddings to Weaviate
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: Name of the input topic to listen to.
+    defaultValue: embeddings-sbert-minilm-l6-v2
+    required: false
+  - name: collectionname
+    inputType: FreeText
+    description: ''
+    defaultValue: Transcript
+    required: false
+  - name: weaviate_apikey
+    inputType: Secret
+    description: ''
+    defaultValue: weaviate_apikey
+    required: true
+  - name: weaviate_rest_endpoint
+    inputType: FreeText
+    description: ''
+    defaultValue: https://quix-redpanda-demo-7tzft9dj.weaviate.network
+    required: false
+  - name: vector_dimension
+    inputType: FreeText
+    description: ''
+    defaultValue: 384
+    required: false
+  - name: groupname
+    inputType: FreeText
+    description: ''
+    defaultValue: weaviate-ingester-v1
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
