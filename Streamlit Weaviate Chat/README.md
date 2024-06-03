@@ -1,30 +1,8 @@
-# Starter transformation
+# Weaviate Chat UI
 
-[This project](https://github.com/quixio/quix-samples/tree/main/python/destinations/starter_destination) is an example of how to transform data on the fly between source and destination.
+A chat UI that uses RAG to provide the relevant context to the LLM based on results retrieved from a Weaviate vector DB.
 
-The default implementation subscribes to data from the source topic and publishes to your destination as-well-as printing content to console output. 
+I appropriated this from code from this repo: https://github.com/streamlit/example-app-langchain-rag.git
 
-Modify the Python code to publish to your chosen destination(s) on the fly.
+There is still a lot of unnecessary code that I need to strip out.
 
-## How to run
-
-Create a [Quix](https://portal.platform.quix.ai/self-sign-up?xlink=github) account or log-in and visit the Samples to use this project.
-
-Clicking `Edit code` on the Sample, forks the project to your own Git repo so you can customize it before deploying.
-
-## Environment variables
-
-The code sample uses the following environment variables:
-
-- **input**: Name of the input topic to listen to.
-- **output**: Name of the output topic to write to.
-
-## Contribute
-
-Submit forked projects to the Quix [GitHub](https://github.com/quixio/quix-samples) repo. Any new project that we accept will be attributed to you and you'll receive $200 in Quix credit.
-
-## Open source
-
-This project is open source under the Apache 2.0 license and available in our [GitHub](https://github.com/quixio/quix-samples) repo.
-
-Please star us and mention us on social to show your appreciation.
