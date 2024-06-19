@@ -13,11 +13,15 @@ load_dotenv()
 
 LANGUAGE = "en"
 CONNECTION_URL = f"wss://eu2.rt.speechmatics.com/v2/{LANGUAGE}"
+DEVICE_INDEX = int(os.getenv("DEVICE_INDEX"))
+CHUNK_SIZE = int(os.getenv("CHUNK_SIZE"))
+API_KEY = os.getenv("API_KEY")
 
 app = Application(
     # broker_address=os.getenv("KAFKA_BROKER_ADDRESS"),
     quix_sdk_token=os.getenv("QUIX_SDK_TOKEN"),
-    consumer_group="whisper_mic_group",
+    consumer_group="speechmatics_groupv1",
+    loglevel="CRITICAL",
     auto_create_topics=True)
 
 topic_name = os.getenv("KAFKA_TOPIC")
@@ -107,7 +111,7 @@ conf = speechmatics.models.TranscriptionConfig(
 def print_transcript(msg):
     # Kafka producer
     with app.get_producer() as producer:
-        json_data = json.dumps({"speaker": "Merlin", "transcription": msg['metadata']['transcript']})
+        json_data = json.dumps({"speaker": "Merlin", "transcription": msg['metadata']['transcript'], "createdTimestamp": datetime.now().isoformat()})
         producer.produce(
             topic=topic.name,
             key="speaker_1",  # Replace with an appropriate key if needed

@@ -135,6 +135,60 @@ deployments:
         description: ''
         required: false
         value: TranscriptWords2
+  - name: Streamlit Weaviate Chat
+    application: Streamlit Weaviate Chat
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 500
+      memory: 1000
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: stweaviate
+    variables:
+      - name: weaviate_url
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-redpanda-demo-7tzft9dj.weaviate.network
+      - name: weaviate_api_key
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: weaviate_apikey
+      - name: collectionname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: TranscriptWords2
+  - name: Streamlit Weaviate Summary
+    application: Streamlit Weaviate Summary
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 500
+      memory: 1000
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: stweaviate
+    variables:
+      - name: weaviate_url
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-redpanda-demo-7tzft9dj.weaviate.network
+      - name: weaviate_api_key
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: weaviate_apikey
+      - name: collectionname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: TranscriptWords2
   - name: Ingest to Weaviate via Langchain
     application: Ingest to Weaviate via Langchain
     deploymentType: Service

@@ -1,8 +1,13 @@
 import os
 from quixstreams import Application, State
 
+# for local dev, load env vars from a .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Application(
     consumer_group=os.environ["groupname"],
+    quix_sdk_token=os.environ["QUIX_SDK_TOKEN"],
     auto_create_topics=True, 
     auto_offset_reset="earliest",
     use_changelog_topics=False
@@ -23,11 +28,14 @@ def chunk_transcriptions(row, state):
     # Retrieve current chunk, overlap from state
     chunk = state.get('chunk', [])
     overlap = state.get('overlap', [])
+    timestamps = state.get('timestamps', [])
 
     # Append new transcription words to chunk
     chunk.extend(row['transcription'].split())
+    timestamps.append(row['createdTimestamp'])
 
     chunks_to_send = []
+    earliestTimestamp = None
 
     while len(chunk) >= chunksize:
         try:
@@ -43,6 +51,9 @@ def chunk_transcriptions(row, state):
 
             # Reset chunk to overlap plus new data
             chunk = overlap + chunk[chunksize:]
+
+            earliestTimestamp = min(timestamps) # Set the earliest timestamp
+            timestamps = timestamps[len(chunk_to_send):] # Reset timestamps to only include those not included in the chunk
             
         except Exception as e:
             print(f"An error occurred in chunk_transcriptions: {e}")
@@ -51,6 +62,7 @@ def chunk_transcriptions(row, state):
     # Update state with current chunk, overlap
     state.set('chunk', chunk)
     state.set('overlap', overlap)
+    state.set('timestamps', timestamps)
     
     chunkid += 1
     finalchunks = " ".join(chunks_to_send)
@@ -58,7 +70,8 @@ def chunk_transcriptions(row, state):
         "speaker": row["speaker"],
         "chunkid": chunkid,
         "chunks": finalchunks,
-        "chunklen": int(len(finalchunks.split()))  # Word count
+        "chunklen": int(len(finalchunks.split())),  # Word count
+        "earliestTimestamp": earliestTimestamp
     }
 
     return row
