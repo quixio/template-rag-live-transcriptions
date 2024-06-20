@@ -108,25 +108,6 @@ deployments:
         description: ''
         required: false
         value: weaviate-ingester-v4
-  - name: Create Sections to Summarize
-    application: Create Sections to Summarize
-    version: latest
-    deploymentType: Service
-    resources:
-      cpu: 200
-      memory: 500
-      replicas: 1
-    variables:
-      - name: input
-        inputType: InputTopic
-        description: Name of the input topic to listen to.
-        required: false
-        value: transcriptions-speechmatics-zainmerlin
-      - name: output
-        inputType: OutputTopic
-        description: Name of the output topic to write to.
-        required: false
-        value: segments-to-summarize
   - name: Generate Summaries
     application: Generate Summaries
     version: latest
