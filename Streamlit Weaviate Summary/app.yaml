@@ -1,4 +1,4 @@
-name: Streamlit Weaviate Search
+name: Streamlit Weaviate Summaries
 language: python
 variables:
   - name: weaviate_url
