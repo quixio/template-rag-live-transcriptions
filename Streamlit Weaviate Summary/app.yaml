@@ -1,10 +1,10 @@
 name: Streamlit Weaviate Summaries
 language: python
 variables:
-  - name: weaviate_url
+  - name: WEAVIATE_REST_ENDPOINT
     inputType: FreeText
     description: ''
-    defaultValue: https://quix-redpanda-demo-7tzft9dj.weaviate.network
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
     required: false
   - name: weaviate_api_key
     inputType: Secret
