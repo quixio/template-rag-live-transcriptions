@@ -12,9 +12,14 @@ from quixstreams import Application
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# for local dev, load env vars from a .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 logger.info(f"WEAVIATE URL {os.environ['weaviate_rest_endpoint']}")
 
 auth_config = weaviate.auth.AuthApiKey(api_key=os.getenv("weaviate_apikey"))
+TEXTKEY = os.environ['textkey']
 
 # Initialize the Weaviate client. Replace the placeholder values with your actual Weaviate instance details.
 client = weaviate.Client(
@@ -31,7 +36,7 @@ client = weaviate.Client(
 retriever = WeaviateHybridSearchRetriever(
     client=client,
     index_name=os.getenv("collectionname"),
-    text_key="chunks",
+    text_key=TEXTKEY,
     attributes=[],
     create_schema_if_missing=True,
 )
@@ -79,8 +84,7 @@ if __name__ == "__main__":
         logger.info("Exiting.")
         run = False
     finally:
-        wclient.close()
-        logger.info("Connection to Weaviate closed")
+        logger.info("Connection to Weaviate terminated")
         logger.info("Exiting")
     
     

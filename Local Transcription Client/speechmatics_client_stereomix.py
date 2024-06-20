@@ -6,6 +6,8 @@ import os
 import json
 from quixstreams import Application
 from datetime import datetime
+from dateutil import parser
+import pytz
 
 # for local dev, load env vars from a .env file
 from dotenv import load_dotenv
@@ -13,7 +15,7 @@ load_dotenv()
 
 LANGUAGE = "en"
 CONNECTION_URL = f"wss://eu2.rt.speechmatics.com/v2/{LANGUAGE}"
-DEVICE_INDEX = int(os.getenv("DEVICE_INDEX"))
+DEVICE_INDEX = 1 #int(os.getenv("DEVICE_INDEX"))
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE"))
 API_KEY = os.getenv("API_KEY")
 SPEAKER = os.getenv("SPEAKER")
@@ -21,7 +23,7 @@ SPEAKER = os.getenv("SPEAKER")
 app = Application(
     # broker_address=os.getenv("KAFKA_BROKER_ADDRESS"),
     quix_sdk_token=os.getenv("QUIX_SDK_TOKEN"),
-    consumer_group="speechmatics_groupv1",
+    consumer_group="speechmatics_groupv2",
     loglevel="CRITICAL",
     auto_create_topics=True)
 
