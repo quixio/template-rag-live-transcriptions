@@ -293,7 +293,6 @@ deployments:
 # This section describes the Topics of the data pipeline
 topics:
   - name: transcriptions
-  - name: textchunks
   - name: trashcan
   - name: textchunks-speechmatics-06J
   - name: transcriptions-speechmatics06J
