@@ -305,3 +305,4 @@ topics:
   - name: v1-transcriptions
   - name: v1-textchunks
   - name: v1-sections-to-summarize
+  - name: v1-summaries
