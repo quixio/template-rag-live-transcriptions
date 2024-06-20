@@ -304,3 +304,4 @@ topics:
   - name: v2-sections-to-summarize
   - name: v2-embeddings-sbert-all-minilm-l6-v2
   - name: v3-transcriptions
+  - name: v3-textchunks
