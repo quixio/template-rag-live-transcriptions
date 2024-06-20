@@ -15,7 +15,7 @@ try:
     # Initialize the Weaviate client
     client = weaviate.connect_to_wcs(
             cluster_url=os.environ["weaviate_rest_endpoint"],  # Replace with your WCS URL
-            auth_credentials=weaviate.auth.AuthApiKey(os.environ["weaviate_apikey"]),  # Replace with your WCS key
+            auth_credentials=weaviate.auth.AuthApiKey(os.environ["weaviate_api_key"]),  # Replace with your WCS key
             headers={'X-OpenAI-Api-key': os.getenv("OPENAI_API_KEY")}  # Replace with your OpenAI API key
         )
     print("Weaviate client initialized successfully.")
