@@ -33,7 +33,7 @@ if not wclient.collections.exists(collectionname): # if the schema/collection is
                 data_type=wvc.config.DataType.TEXT
             ),
             wvc.config.Property(
-                name="chunkid",
+                name="segment",
                 data_type=wvc.config.DataType.TEXT
             ),
             wvc.config.Property(
@@ -44,6 +44,14 @@ if not wclient.collections.exists(collectionname): # if the schema/collection is
                 name="chunklen",
                 data_type=wvc.config.DataType.TEXT
             ),
+            wvc.config.Property(
+                name="windowlen",
+                data_type=wvc.config.DataType.TEXT
+            ),
+            wvc.config.Property(
+                name="earliestTimestamp",
+                data_type=wvc.config.DataType.TEXT
+            ),
         ]
     )
 
@@ -52,15 +60,16 @@ else:
 
 # Define the ingestion function
 def ingest_vectors(row):
-    unique_id = uu.uuid4()
-
     try:
         uuid = transcripts.data.insert(
         properties={
+                "summary": row["summary"],
                 "speaker": row["speaker"],
-                "chunkid": unique_id,
+                "segment": row["segment"],
                 "chunks": row["chunks"],
                 "chunklen": str(row["chunklen"]),
+                "windowlen": row["windowlen"],
+                "earliestTimestamp": row["earliestTimestamp"]
             },
         vector=row["embeddings"])
 
