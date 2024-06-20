@@ -9,7 +9,7 @@ variables:
   - name: collectionname
     inputType: FreeText
     description: ''
-    defaultValue: Transcript
+    defaultValue: DemoTranscriptSummariesV1
     required: false
   - name: weaviate_apikey
     inputType: Secret
