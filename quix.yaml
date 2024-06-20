@@ -8,8 +8,8 @@ metadata:
 deployments:
   - name: Process Text Chunks
     application: Process Text Chunks
-    deploymentType: Service
     version: latest
+    deploymentType: Service
     resources:
       cpu: 200
       memory: 500
@@ -19,12 +19,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: transcriptions-speechmatics
+        value: transcriptions-speechmatics06J
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: textchunks-speechmatics
+        value: textchunks-speechmatics-06J
       - name: chunksize
         inputType: FreeText
         description: ''
@@ -42,8 +42,8 @@ deployments:
         value: chunkster-v5
   - name: Create Embeddings
     application: Create Embeddings
-    deploymentType: Service
     version: latest
+    deploymentType: Service
     resources:
       cpu: 500
       memory: 1000
@@ -53,12 +53,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: textchunks-33words
+        value: summaries
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: embeddings-sbert-minilm-l6-v2b
+        value: embeddings-sbert-minilm-l6-v2
       - name: groupname
         inputType: FreeText
         description: ''
@@ -68,11 +68,11 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: chunks
+        value: summary
   - name: Ingest Embeddings to Weaviate
     application: Ingest Embeddings to Weaviate
-    deploymentType: Service
     version: latest
+    deploymentType: Service
     resources:
       cpu: 200
       memory: 500
@@ -82,12 +82,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: embeddings-sbert-minilm-l6-v2b
+        value: embeddings-sbert-minilm-l6-v2
       - name: collectionname
         inputType: FreeText
         description: ''
         required: false
-        value: Transcript
+        value: TranscriptSummariesV2
       - name: weaviate_apikey
         inputType: Secret
         description: ''
@@ -97,7 +97,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: https://mc-sandbox-ykz697mi.weaviate.network
+        value: https://quix-demo-adk86m6q.weaviate.network
       - name: vector_dimension
         inputType: FreeText
         description: ''
@@ -110,8 +110,8 @@ deployments:
         value: weaviate-ingester-v4
   - name: Streamlit Weaviate Search
     application: Streamlit Weaviate Search
-    deploymentType: Service
     version: latest
+    deploymentType: Service
     resources:
       cpu: 500
       memory: 1000
@@ -135,108 +135,10 @@ deployments:
         description: ''
         required: false
         value: TranscriptWords2
-  - name: Streamlit Weaviate Chat
-    application: Streamlit Weaviate Chat
-    deploymentType: Service
-    version: latest
-    resources:
-      cpu: 500
-      memory: 1000
-      replicas: 1
-    publicAccess:
-      enabled: true
-      urlPrefix: stweaviate
-    variables:
-      - name: weaviate_url
-        inputType: FreeText
-        description: ''
-        required: false
-        value: https://quix-redpanda-demo-7tzft9dj.weaviate.network
-      - name: weaviate_api_key
-        inputType: Secret
-        description: ''
-        required: false
-        secretKey: weaviate_apikey
-      - name: collectionname
-        inputType: FreeText
-        description: ''
-        required: false
-        value: TranscriptWords2
-  - name: Streamlit Weaviate Summary
-    application: Streamlit Weaviate Summary
-    deploymentType: Service
-    version: latest
-    resources:
-      cpu: 500
-      memory: 1000
-      replicas: 1
-    publicAccess:
-      enabled: true
-      urlPrefix: stweaviate
-    variables:
-      - name: weaviate_url
-        inputType: FreeText
-        description: ''
-        required: false
-        value: https://quix-redpanda-demo-7tzft9dj.weaviate.network
-      - name: weaviate_api_key
-        inputType: Secret
-        description: ''
-        required: false
-        secretKey: weaviate_apikey
-      - name: collectionname
-        inputType: FreeText
-        description: ''
-        required: false
-        value: TranscriptWords2
-  - name: Ingest to Weaviate via Langchain
-    application: Ingest to Weaviate via Langchain
-    deploymentType: Service
-    version: latest
-    resources:
-      cpu: 200
-      memory: 500
-      replicas: 1
-    variables:
-      - name: input
-        inputType: InputTopic
-        description: Name of the input topic to listen to.
-        required: false
-        value: textchunks-speechmatics
-      - name: collectionname
-        inputType: FreeText
-        description: ''
-        required: false
-        value: TranscriptLCSpeechmatics
-      - name: weaviate_apikey
-        inputType: Secret
-        description: ''
-        required: true
-        secretKey: weaviate_apikey
-      - name: weaviate_rest_endpoint
-        inputType: FreeText
-        description: ''
-        required: false
-        value: https://mc-sandbox-ykz697mi.weaviate.network
-      - name: vector_dimension
-        inputType: FreeText
-        description: ''
-        required: false
-        value: 384
-      - name: groupname
-        inputType: FreeText
-        description: ''
-        required: false
-        value: weaviate-ingester-v6
-      - name: OPENAI_API_KEY
-        inputType: Secret
-        description: ''
-        required: false
-        secretKey: open_api_key
   - name: Process Text Chunks for Embedding
     application: Process Text Chunks
-    deploymentType: Service
     version: latest
+    deploymentType: Service
     resources:
       cpu: 200
       memory: 500
@@ -267,41 +169,135 @@ deployments:
         description: ''
         required: false
         value: chunkster-v1c
+  - name: Create Sections to Summarize
+    application: Create Sections to Summarize
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: transcriptions-speechmatics06J
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: segments-to-summarize
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunkster-v1f
+      - name: deltaminutes
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 3
+  - name: Ingest Embeddings to Weaviate Langchain
+    application: Ingest Embeddings to Weaviate Langchain
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: textchunks-speechmatics-06J
+      - name: collectionname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: TranscriptLangchainSpeechmatics
+      - name: weaviate_apikey
+        inputType: Secret
+        description: ''
+        required: true
+        secretKey: weaviate_apikey
+      - name: weaviate_rest_endpoint
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-demo-adk86m6q.weaviate.network
+      - name: vector_dimension
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 384
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: weaviate-ingester-v6
+      - name: OPENAI_API_KEY
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
+      - name: textkey
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunks
+  - name: Generate Summaries
+    application: Generate Summaries
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: segments-to-summarize
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: summaries
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: summarizer-v1
+      - name: openai_api_key
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
+      - name: gpt_model
+        inputType: FreeText
+        description: ''
+        required: false
+        value: gpt-4o
 
 # This section describes the Topics of the data pipeline
 topics:
   - name: transcriptions
     persisted: false
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
   - name: textchunks
     persisted: false
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
   - name: embeddings-sbert-minilm-l6-v2
     persisted: false
   - name: trashcan
     persisted: false
-  - name: textchunks-33chars
+  - name: textchunks-speechmatics-06J
     persisted: false
-  - name: embeddings-sbert-minilm-l6-v2a
+  - name: transcriptions-speechmatics06J
     persisted: false
-  - name: textchunks-33words
+  - name: segments-to-summarize
     persisted: false
-  - name: embeddings-sbert-minilm-l6-v2b
+  - name: summaries
     persisted: false
-  - name: transcriptions-speechmatics
-    persisted: false
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 4320
-      retentionInBytes: 52428800
-  - name: textchunks-speechmatics
-    persisted: false
+
