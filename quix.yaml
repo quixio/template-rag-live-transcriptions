@@ -189,7 +189,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: TranscriptLangchainSpeechmatics
+        value: TranscriptZainMerlin
       - name: weaviate_apikey
         inputType: Secret
         description: ''
