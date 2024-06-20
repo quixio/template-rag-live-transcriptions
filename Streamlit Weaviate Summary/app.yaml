@@ -11,10 +11,10 @@ variables:
     description: ''
     defaultValue: weaviate_apikey
     required: false
-  - name: collectionname
+  - name: COLLECTIONNAME
     inputType: FreeText
     description: ''
-    defaultValue: Transcript
+    defaultValue: TranscriptSummariesV2
     required: false
   - name: OPENAI_API_KEY
     inputType: Secret
