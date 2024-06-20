@@ -107,7 +107,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: weaviate-ingester-v5b
+        value: weaviate-ingester-v5c
   - name: Generate Summaries
     application: Generate Summaries
     version: latest
