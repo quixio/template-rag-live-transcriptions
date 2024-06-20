@@ -118,7 +118,7 @@ deployments:
       replicas: 1
     publicAccess:
       enabled: true
-      urlPrefix: stweaviate
+      urlPrefix: strweaviate
     variables:
       - name: weaviate_url
         inputType: FreeText
