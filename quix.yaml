@@ -292,7 +292,6 @@ deployments:
 
 # This section describes the Topics of the data pipeline
 topics:
-  - name: transcriptions
   - name: trashcan
   - name: transcriptions-speechmatics06J
   - name: transcriptions-speechmatics-zainmerlin
