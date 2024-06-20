@@ -306,3 +306,4 @@ topics:
   - name: v3-transcriptions
   - name: v3-textchunks
   - name: v3-summaries
+  - name: v3-sections-to-summarize
