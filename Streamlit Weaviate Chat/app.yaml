@@ -16,6 +16,11 @@ variables:
     description: ''
     defaultValue: Transcript
     required: false
+  - name: OPENAI_API_KEY
+    inputType: Secret
+    description: ''
+    defaultValue: open_api_key
+    required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
 defaultFile: main.py
