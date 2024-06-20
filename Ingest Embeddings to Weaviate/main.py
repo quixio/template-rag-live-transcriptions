@@ -3,6 +3,7 @@ import weaviate
 import weaviate.classes as wvc
 import os
 import logging
+import uuid as uu
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -51,12 +52,13 @@ else:
 
 # Define the ingestion function
 def ingest_vectors(row):
+    unique_id = uu.uuid4()
 
     try:
         uuid = transcripts.data.insert(
         properties={
                 "speaker": row["speaker"],
-                "chunkid": str(row["chunkid"]),
+                "chunkid": unique_id,
                 "chunks": row["chunks"],
                 "chunklen": str(row["chunklen"]),
             },
