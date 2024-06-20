@@ -303,3 +303,4 @@ topics:
   - name: textchunks-speechmatics-zainmerlin
   - name: transcriptions-speechmatics-zainmerlin
   - name: transcriptions-v1
+  - name: textchunks-v1
