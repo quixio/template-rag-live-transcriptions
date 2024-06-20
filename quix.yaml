@@ -249,6 +249,40 @@ deployments:
         description: ''
         required: false
         secretKey: open_api_key
+  - name: Streamlit Weaviate Chat
+    application: Streamlit Weaviate Chat
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: weaviate_rest_endpoint
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-demo-adk86m6q.weaviate.network
+      - name: weaviate_api_key
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: weaviate_apikey
+      - name: collection
+        inputType: FreeText
+        description: ''
+        required: false
+        value: TranscriptionChunks06J
+      - name: OPENAI_API_KEY
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
+      - name: textkey
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunks
 
 # This section describes the Topics of the data pipeline
 topics:
