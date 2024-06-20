@@ -301,3 +301,4 @@ topics:
   - name: v2-transcriptions
   - name: v2-textchunks
   - name: v2-summaries
+  - name: v2-sections-to-summarize
