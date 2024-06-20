@@ -4,7 +4,7 @@ variables:
   - name: input
     inputType: InputTopic
     description: Name of the input topic to listen to.
-    defaultValue: textchunks-speechmatics
+    defaultValue: transcriptions-speechmatics06J
     required: false
   - name: collectionname
     inputType: FreeText
