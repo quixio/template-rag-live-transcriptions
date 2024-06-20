@@ -121,22 +121,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: transcriptions-speechmatics06J
+        value: transcriptions-speechmatics-zainmerlin
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
         value: segments-to-summarize
-      - name: groupname
-        inputType: FreeText
-        description: ''
-        required: false
-        value: chunkster-v1f
-      - name: deltaminutes
-        inputType: FreeText
-        description: ''
-        required: false
-        value: 3
   - name: Generate Summaries
     application: Generate Summaries
     version: latest
