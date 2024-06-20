@@ -3,7 +3,6 @@ import weaviate
 import weaviate.classes as wvc
 import os
 import logging
-import uuid as uu
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
