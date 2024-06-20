@@ -297,7 +297,6 @@ topics:
   - name: trashcan
   - name: textchunks-speechmatics-06J
   - name: transcriptions-speechmatics06J
-  - name: summaries
   - name: textchunks-speechmatics-zainmerlin
   - name: transcriptions-speechmatics-zainmerlin
   - name: v1-transcriptions
