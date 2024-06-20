@@ -220,6 +220,35 @@ deployments:
         description: ''
         required: false
         value: chunks
+  - name: Streamlit Weaviate Summaries
+    application: Streamlit Weaviate Summary
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: WEAVIATE_REST_ENDPOINT
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-demo-adk86m6q.weaviate.network
+      - name: WEAVIATE_APIKEY
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: weaviate_apikey
+      - name: COLLECTIONNAME
+        inputType: FreeText
+        description: ''
+        required: false
+        value: TranscriptSummariesV2
+      - name: OPENAI_API_KEY
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
 
 # This section describes the Topics of the data pipeline
 topics:
