@@ -19,7 +19,7 @@ variables:
   - name: weaviate_rest_endpoint
     inputType: FreeText
     description: ''
-    defaultValue: https://mc-sandbox-ykz697mi.weaviate.network
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
     required: false
   - name: vector_dimension
     inputType: FreeText
