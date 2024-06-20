@@ -3,6 +3,7 @@ import weaviate
 import weaviate.classes as wvc
 import os
 import logging
+from datetime import datetime, timezone
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -60,6 +61,10 @@ else:
 # Define the ingestion function
 def ingest_vectors(row):
     try:
+        
+        date_str = row["earliestTimestamp"] # Original date string
+        rfc3339_str = datetime.fromisoformat(date_str).replace(microseconds=0, tzinfo=timezone.utc).isoformat() # convert to RFC3339 format
+
         uuid = transcripts.data.insert(
         properties={
                 "summary": row["summary"],
@@ -68,7 +73,7 @@ def ingest_vectors(row):
                 "chunks": row["chunks"],
                 "chunklen": str(row["chunklen"]),
                 "windowlen": row["windowlen"],
-                "earliestTimestamp": row["earliestTimestamp"]
+                "earliestTimestamp": rfc3339_str
             },
         vector=row["embeddings"])
 
