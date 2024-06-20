@@ -50,7 +50,7 @@ if not wclient.collections.exists(collectionname): # if the schema/collection is
             ),
             wvc.config.Property(
                 name="earliestTimestamp",
-                data_type=wvc.config.DataType.TEXT
+                data_type=wvc.config.DataType.DATE
             ),
         ]
     )
