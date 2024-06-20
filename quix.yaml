@@ -19,12 +19,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: transcriptions-speechmatics-zainmerlin
+        value: v1-transcriptions
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: textchunks-speechmatics-zainmerlin
+        value: v1-textchunks
       - name: chunksize
         inputType: FreeText
         description: ''
