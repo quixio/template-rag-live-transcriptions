@@ -6,7 +6,7 @@ variables:
     description: ''
     defaultValue: https://quix-demo-adk86m6q.weaviate.network
     required: false
-  - name: weaviate_api_key
+  - name: WEAVIATE_APIKEY
     inputType: Secret
     description: ''
     defaultValue: weaviate_apikey
