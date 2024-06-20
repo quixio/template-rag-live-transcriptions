@@ -14,7 +14,7 @@ variables:
   - name: collection
     inputType: FreeText
     description: ''
-    defaultValue: LiveTranscriptChunks
+    defaultValue: TranscriptionChunks06J
     required: false
   - name: OPENAI_API_KEY
     inputType: Secret
