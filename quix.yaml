@@ -294,7 +294,6 @@ deployments:
 topics:
   - name: transcriptions
   - name: textchunks
-  - name: embeddings-sbert-minilm-l6-v2
   - name: trashcan
   - name: textchunks-speechmatics-06J
   - name: transcriptions-speechmatics06J
