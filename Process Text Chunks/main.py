@@ -7,7 +7,6 @@ load_dotenv()
 
 app = Application(
     consumer_group=os.environ["groupname"],
-    quix_sdk_token=os.environ["QUIX_SDK_TOKEN"],
     auto_create_topics=True, 
     auto_offset_reset="earliest",
     use_changelog_topics=False
