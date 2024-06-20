@@ -1,6 +1,5 @@
 import streamlit as st
 import os
-import pandas as pd
 import weaviate
 import time
 import re
