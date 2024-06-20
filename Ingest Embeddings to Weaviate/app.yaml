@@ -29,7 +29,7 @@ variables:
   - name: groupname
     inputType: FreeText
     description: ''
-    defaultValue: weaviate-ingester-v1
+    defaultValue: weaviate-ingester-v1a
     required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
