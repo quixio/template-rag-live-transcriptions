@@ -294,7 +294,6 @@ deployments:
 topics:
   - name: transcriptions
   - name: trashcan
-  - name: textchunks-speechmatics-06J
   - name: transcriptions-speechmatics06J
   - name: textchunks-speechmatics-zainmerlin
   - name: transcriptions-speechmatics-zainmerlin
