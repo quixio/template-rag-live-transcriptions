@@ -121,12 +121,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: segments-to-summarize
+        value: v1-sections-to-summarize
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: summaries
+        value: v1-summaries
       - name: groupname
         inputType: FreeText
         description: ''
