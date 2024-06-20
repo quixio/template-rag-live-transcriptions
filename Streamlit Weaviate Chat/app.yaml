@@ -21,6 +21,11 @@ variables:
     description: ''
     defaultValue: open_api_key
     required: false
+  - name: textkey
+    inputType: FreeText
+    description: ''
+    defaultValue: chunks
+    required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
 defaultFile: main.py
