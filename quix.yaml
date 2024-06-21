@@ -160,7 +160,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: DemoTranscriptChunksV1
+        value: DemoTranscriptChunksV3
       - name: weaviate_apikey
         inputType: Secret
         description: ''
