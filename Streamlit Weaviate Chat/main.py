@@ -81,8 +81,8 @@ def run():
 
     if ready:
         chain = get_chain(openai_api_key=openai_api_key)
-        # st.subheader("Ask me questions about the conversation you just had.")
-        st.subheader("Ask me questions about some products.")
+        st.subheader("Ask me questions about the conversation that is taking place.")
+        # st.subheader("Ask me questions about some products.")
         show_ui(chain, "What would you like to know?")
     else:
         st.stop()
