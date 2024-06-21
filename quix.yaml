@@ -53,12 +53,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: v1-summaries
+        value: v2-summaries
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: v1-embeddings-sbert-all-minilm-l6-v2
+        value: v2-embeddings-sbert-all-minilm-l6-v2
       - name: groupname
         inputType: FreeText
         description: ''
