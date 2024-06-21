@@ -82,7 +82,7 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: v1-embeddings-sbert-all-minilm-l6-v2
+        value: v2-embeddings-sbert-all-minilm-l6-v2
       - name: collectionname
         inputType: FreeText
         description: ''
