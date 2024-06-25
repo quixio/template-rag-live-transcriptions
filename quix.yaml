@@ -87,7 +87,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: DemoTranscriptSummariesV5
+        value: DemoTranscriptSummariesV7
       - name: weaviate_apikey
         inputType: Secret
         description: ''
