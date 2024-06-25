@@ -26,7 +26,7 @@ def get_summary(row, model=gptmodel):
     model=model,
     messages=[
         {"role": "system", "content": "You are an expert at deciphering and summarizing long transcripts that contain unstructured dialog, often without correct punctuation."},
-        {"role": "user", "content": f"The following transcript contains some fragmented dialog and cut off sentences but there are also some salient points in there. Please pick out the most salient points and summarize them using the present perfect verb tense. Do not include any extra commentary, just the summary.\n\nTRANSCRIPT:\n\n{row['chunks']}"}
+        {"role": "user", "content": f"The following transcript contains some fragmented dialog and cut off sentences but there are also some salient points in there. Please pick out the most salient points and summarize them using the present perfect verb tense. There are multiple speakers so just refer to them as the speakers (since we do not know who is who). Do not include any extra commentary, just the summary.\n\nTRANSCRIPT:\n\n{row['chunks']}"}
     ]
     )
 
