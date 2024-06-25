@@ -4,7 +4,7 @@ variables:
   - name: input
     inputType: InputTopic
     description: Name of the input topic to listen to.
-    defaultValue: v1-embeddings-sbert-all-minilm-l6-v2
+    defaultValue: v2-embeddings-sbert-all-minilm-l6-v2
     required: false
   - name: collectionname
     inputType: FreeText
