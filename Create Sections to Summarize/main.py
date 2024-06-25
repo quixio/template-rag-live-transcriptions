@@ -27,46 +27,42 @@ time_window = timedelta(minutes=deltaminutes)
 def chunk_transcriptions(row: dict, state: State):
     global chunkid
 
-    # Retrieve current chunks and timestamps from state
-    chunks = state.get('chunks', {})
-    timestamps = state.get('timestamps', {})
+    # Retrieve current chunk, earliest timestamp from state
+    chunk = state.get('chunk', [])
+    earliest_timestamp_str = state.get('earliest_timestamp', None)
+    earliest_timestamp = datetime.fromisoformat(earliest_timestamp_str) if earliest_timestamp_str else None
 
-    speaker = row['speaker']
+
+      # Parse the current row's earliest timestamp
     currentrow_timestamp = datetime.fromisoformat(row['createdTimestamp'])
 
-    # Initialize speaker-specific chunk and timestamp if not set
-    if speaker not in chunks:
-        chunks[speaker] = []
-        timestamps[speaker] = currentrow_timestamp.isoformat()
+    # Initialize earliest timestamp if not set
+    if earliest_timestamp is None:
+        earliest_timestamp = currentrow_timestamp
 
-    earliest_timestamp = datetime.fromisoformat(timestamps[speaker])
-
-    # Check if the current timestamp falls outside the time window
+    # Check if the current timestamp falls outside the 5-minute window
     if currentrow_timestamp - earliest_timestamp > time_window:
         # Send the current chunk to the downstream topic
-        finalchunks = " ".join(chunks[speaker])
+        finalchunks = " ".join(chunk)
         row_to_send = {
-            "speaker": speaker,
+            "speaker": row["speaker"],
             "segment": f"FROM: {earliest_timestamp.isoformat(timespec='seconds')} TO: {currentrow_timestamp.isoformat(timespec='seconds')}",
             "chunks": finalchunks,
             "chunklen": len(finalchunks.split()),  # Word count
             "windowlen": f"{deltaminutes} minute(s)",
             "earliestTimestamp": earliest_timestamp.isoformat()
         }
-        # Start new chunk with current row for the speaker
-        chunks[speaker] = [row['transcription']]
-        timestamps[speaker] = currentrow_timestamp.isoformat()
+        state.set('chunk', [row['transcription']])  # Start new chunk with current row
+        state.set('earliest_timestamp', currentrow_timestamp.isoformat())
         chunkid += 1
-        state.set('chunks', chunks)
-        state.set('timestamps', timestamps)
         return row_to_send
 
-    # Append new transcription words to speaker-specific chunk
-    chunks[speaker].extend(row['transcription'].split())
+    # Append new transcription words to chunk
+    chunk.extend(row['transcription'].split())
 
-    # Update state with current chunks and timestamps
-    state.set('chunks', chunks)
-    state.set('timestamps', timestamps)
+    # Update state with current chunk and earliest timestamp
+    state.set('chunk', chunk)
+    state.set('earliest_timestamp', earliest_timestamp.isoformat())
 
     return None
 
