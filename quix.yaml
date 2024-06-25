@@ -251,7 +251,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: 5
+        value: 3
 
 # This section describes the Topics of the data pipeline
 topics:
