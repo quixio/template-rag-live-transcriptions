@@ -19,7 +19,7 @@ variables:
   - name: weaviate_rest_endpoint
     inputType: FreeText
     description: ''
-    defaultValue: https://quix-redpanda-demo-7tzft9dj.weaviate.network
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
     required: false
   - name: vector_dimension
     inputType: FreeText
