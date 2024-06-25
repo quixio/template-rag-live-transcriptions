@@ -1,6 +1,6 @@
 import os
 from quixstreams import Application, State
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 
 # for local dev, load env vars from a .env file
 from dotenv import load_dotenv
@@ -24,6 +24,24 @@ chunkid = 0
 deltaminutes = int(os.environ["deltaminutes"])
 time_window = timedelta(minutes=deltaminutes)
 
+def time_ago(timestamp):
+    now = datetime.now(timezone.utc)
+    diff = now - timestamp
+
+    seconds = diff.total_seconds()
+    minutes = seconds / 60
+    hours = minutes / 60
+    days = hours / 24
+
+    if seconds < 60:
+        return "just now"
+    elif minutes < 60:
+        return f"{int(minutes)} minutes ago"
+    elif hours < 24:
+        return f"{int(hours)} hours ago"
+    else:
+        return f"{int(days)} days ago"
+
 def chunk_transcriptions(row: dict, state: State):
     global chunkid
 
@@ -45,13 +63,15 @@ def chunk_transcriptions(row: dict, state: State):
     if currentrow_timestamp - earliest_timestamp > time_window:
         # Send the current chunk to the downstream topic
         finalchunks = " ".join(chunks[speaker])
+        ago_value = time_ago(earliest_timestamp)
         row_to_send = {
             "speaker": speaker,
             "segment": f"FROM: {earliest_timestamp.isoformat(timespec='seconds')} TO: {currentrow_timestamp.isoformat(timespec='seconds')}",
             "chunks": finalchunks,
             "chunklen": len(finalchunks.split()),  # Word count
             "windowlen": f"{deltaminutes} minute(s)",
-            "earliestTimestamp": earliest_timestamp.isoformat()
+            "earliestTimestamp": earliest_timestamp.isoformat(),
+            "ago": ago_value  # Add the "ago" value
         }
         # Start new chunk with current row for the speaker
         chunks[speaker] = [row['transcription']]
