@@ -9,7 +9,7 @@ variables:
   - name: output
     inputType: OutputTopic
     description: Name of the output topic to write to.
-    defaultValue: segments-to-summarize
+    defaultValue: v2-sections-to-summarize
     required: false
   - name: groupname
     inputType: FreeText
