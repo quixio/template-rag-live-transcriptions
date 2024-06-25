@@ -37,9 +37,9 @@ def chunk_transcriptions(row: dict, state: State):
     # Initialize speaker-specific chunk and timestamp if not set
     if speaker not in chunks:
         chunks[speaker] = []
-        timestamps[speaker] = currentrow_timestamp
+        timestamps[speaker] = currentrow_timestamp.isoformat()
 
-    earliest_timestamp = timestamps[speaker]
+    earliest_timestamp = datetime.fromisoformat(timestamps[speaker])
 
     # Check if the current timestamp falls outside the time window
     if currentrow_timestamp - earliest_timestamp > time_window:
@@ -55,7 +55,7 @@ def chunk_transcriptions(row: dict, state: State):
         }
         # Start new chunk with current row for the speaker
         chunks[speaker] = [row['transcription']]
-        timestamps[speaker] = currentrow_timestamp
+        timestamps[speaker] = currentrow_timestamp.isoformat()
         chunkid += 1
         state.set('chunks', chunks)
         state.set('timestamps', timestamps)
