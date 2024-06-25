@@ -4,7 +4,7 @@ variables:
   - name: input
     inputType: InputTopic
     description: Name of the input topic to listen to.
-    defaultValue: transcriptions-speechmatics06J
+    defaultValue: v2-transcriptions
     required: false
   - name: output
     inputType: OutputTopic
