@@ -32,6 +32,8 @@ def get_summary(row, model=gptmodel):
 
     return completion.choices[0].message.content
 
+sdf = sdf.filter(lambda row: row["chunklen"] > 0)
+
 # apply the result of the count_names function to the row
 sdf["summary"] = sdf.apply(get_summary, stateful=False)
 
