@@ -25,13 +25,18 @@ deltaminutes = int(os.environ["deltaminutes"])
 time_window = timedelta(minutes=deltaminutes)
 
 def time_ago(timestamp):
-    now = datetime.now(timezone.utc)
+    now = datetime.now(timezone.utc)  # Ensure current time is in UTC
+    if timestamp.tzinfo is None:
+        timestamp = timestamp.replace(tzinfo=timezone.utc)  # Ensure timestamp is in UTC
     diff = now - timestamp
 
     seconds = diff.total_seconds()
     minutes = seconds / 60
     hours = minutes / 60
     days = hours / 24
+
+    # Debugging: Print the calculated differences
+    print(f"Seconds: {seconds}, Minutes: {minutes}, Hours: {hours}, Days: {days}")
 
     if seconds < 60:
         return "just now"
