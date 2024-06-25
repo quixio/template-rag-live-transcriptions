@@ -49,6 +49,10 @@ if not wclient.collections.exists(collectionname): # if the schema/collection is
                 data_type=wvc.config.DataType.TEXT
             ),
             wvc.config.Property(
+                name="time_diff",
+                data_type=wvc.config.DataType.TEXT
+            ),
+            wvc.config.Property(
                 name="earliestTimestamp",
                 data_type=wvc.config.DataType.DATE
             ),
@@ -65,6 +69,16 @@ def ingest_vectors(row):
         date_str = row["earliestTimestamp"] # Original date string
         rfc3339_str = datetime.fromisoformat(date_str).replace(tzinfo=timezone.utc).isoformat(timespec='seconds') # convert to RFC3339 format
 
+        # Calculate the time difference
+        earliest_timestamp = datetime.fromisoformat(date_str).replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+        time_diff = now - earliest_timestamp
+
+        # Calculate the time difference in minutes and seconds
+        minutes_ago = time_diff.total_seconds() // 60
+        seconds_ago = time_diff.total_seconds() % 60
+        time_diff_str = f"{int(minutes_ago)} minutes ago, {int(seconds_ago)} seconds ago"
+
         uuid = transcripts.data.insert(
         properties={
                 "summary": row["summary"],
@@ -73,7 +87,8 @@ def ingest_vectors(row):
                 "chunks": row["chunks"],
                 "chunklen": str(row["chunklen"]),
                 "windowlen": row["windowlen"],
-                "earliestTimestamp": rfc3339_str
+                "earliestTimestamp": rfc3339_str,
+                "time_diff": time_diff_str
             },
         vector=row["embeddings"])
 
