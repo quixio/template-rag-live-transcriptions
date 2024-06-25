@@ -1,6 +1,6 @@
 import os
 from quixstreams import Application, State
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
 
 # for local dev, load env vars from a .env file
 from dotenv import load_dotenv
@@ -8,7 +8,6 @@ load_dotenv()
 
 app = Application(
     consumer_group=os.environ["groupname"],
-    # quix_sdk_token=os.environ["QUIX_SDK_TOKEN"],
     auto_create_topics=True, 
     auto_offset_reset="earliest",
     use_changelog_topics=False
@@ -25,24 +24,6 @@ chunkid = 0
 deltaminutes = int(os.environ["deltaminutes"])
 time_window = timedelta(minutes=deltaminutes)
 
-def time_ago(timestamp):
-    now = datetime.now(timezone.utc)
-    diff = now - timestamp
-
-    seconds = diff.total_seconds()
-    minutes = seconds / 60
-    hours = minutes / 60
-    days = hours / 24
-
-    if seconds < 60:
-        return "just now"
-    elif minutes < 60:
-        return f"{int(minutes)} minutes ago"
-    elif hours < 24:
-        return f"{int(hours)} hours ago"
-    else:
-        return f"{int(days)} days ago"
-
 def chunk_transcriptions(row: dict, state: State):
     global chunkid
 
@@ -56,14 +37,13 @@ def chunk_transcriptions(row: dict, state: State):
     # Initialize speaker-specific chunk and timestamp if not set
     if speaker not in chunks:
         chunks[speaker] = []
-        timestamps[speaker] = currentrow_timestamp
+        timestamps[speaker] = currentrow_timestamp.isoformat()
 
-    earliest_timestamp = timestamps[speaker]
+    earliest_timestamp = datetime.fromisoformat(timestamps[speaker])
 
     # Check if the current timestamp falls outside the time window
     if currentrow_timestamp - earliest_timestamp > time_window:
         # Send the current chunk to the downstream topic
-        ago_value = time_ago(earliest_timestamp)
         finalchunks = " ".join(chunks[speaker])
         row_to_send = {
             "speaker": speaker,
@@ -71,12 +51,11 @@ def chunk_transcriptions(row: dict, state: State):
             "chunks": finalchunks,
             "chunklen": len(finalchunks.split()),  # Word count
             "windowlen": f"{deltaminutes} minute(s)",
-            "earliestTimestamp": earliest_timestamp.isoformat(),
-            "ago": ago_value  # Add the "ago" value
+            "earliestTimestamp": earliest_timestamp.isoformat()
         }
         # Start new chunk with current row for the speaker
         chunks[speaker] = [row['transcription']]
-        timestamps[speaker] = currentrow_timestamp
+        timestamps[speaker] = currentrow_timestamp.isoformat()
         chunkid += 1
         state.set('chunks', chunks)
         state.set('timestamps', timestamps)
