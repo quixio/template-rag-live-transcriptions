@@ -155,7 +155,7 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: v2-textchunks
+        value: v4-textchunks-mc
       - name: collectionname
         inputType: FreeText
         description: ''
