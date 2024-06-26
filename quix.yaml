@@ -240,3 +240,4 @@ topics:
   - name: v3-sections-to-summarize
   - name: v3-embeddings-sbert-all-minilm-l6-v2
   - name: v4-transcriptions-mc
+  - name: v4-textchunks-mc
