@@ -24,10 +24,13 @@ chunkid = 0
 def chunk_transcriptions(row, state):
     global chunkid
 
-    # Retrieve current chunk, overlap from state
-    chunk = state.get('chunk', [])
-    overlap = state.get('overlap', [])
-    timestamps = state.get('timestamps', [])
+    speaker = row["speaker"]
+    
+    # Retrieve or initialize state for the current speaker
+    speaker_state = state.get(speaker, {'chunk': [], 'overlap': [], 'timestamps': []})
+    chunk = speaker_state['chunk']
+    overlap = speaker_state['overlap']
+    timestamps = speaker_state['timestamps']
 
     # Append new transcription words to chunk
     chunk.extend(row['transcription'].split())
@@ -42,7 +45,7 @@ def chunk_transcriptions(row, state):
             chunk_to_send = chunk[:chunksize]
 
             # Add the chunk to the list to be sent to downstream topic
-            print(f"Created chunk: '{' '.join(chunk_to_send)}'...")
+            print(f"Created chunk: '{' '.join(chunk_to_send)}' for speaker {speaker}...")
             chunks_to_send.append(' '.join(chunk_to_send))
 
             # Set new overlap of overlapsize words
@@ -59,17 +62,14 @@ def chunk_transcriptions(row, state):
             raise  # Re-raise the exception to ensure it's not silently swallowed
 
     # Update state with current chunk, overlap
-    state.set('chunk', chunk)
-    state.set('overlap', overlap)
-    state.set('timestamps', timestamps)
+    state.set(speaker, {'chunk': chunk, 'overlap': overlap, 'timestamps': timestamps})
     
     chunkid += 1
     finalchunks = " ".join(chunks_to_send)
-    activespeaker = row["speaker"]
     row = {
-        "speaker": activespeaker,
+        "speaker": speaker,
         "chunkid": chunkid,
-        "chunks": f"{activespeaker} said: {finalchunks}",
+        "chunks": f"{speaker} said: {finalchunks}",
         "chunklen": int(len(finalchunks.split())),  # Word count
         "earliestTimestamp": earliestTimestamp
     }
