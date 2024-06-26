@@ -65,10 +65,11 @@ def chunk_transcriptions(row, state):
     
     chunkid += 1
     finalchunks = " ".join(chunks_to_send)
+    activespeaker = row["speaker"]
     row = {
-        "speaker": row["speaker"],
+        "speaker": activespeaker,
         "chunkid": chunkid,
-        "chunks": finalchunks,
+        "chunks": f"{activespeaker} said: {finalchunks}",
         "chunklen": int(len(finalchunks.split())),  # Word count
         "earliestTimestamp": earliestTimestamp
     }
