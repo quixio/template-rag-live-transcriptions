@@ -1,0 +1,243 @@
+# Quix Project Descriptor
+# This file describes the data pipeline and configuration of resources of a Quix Project.
+
+metadata:
+  version: 1.0
+
+# This section describes the Deployments of the data pipeline
+deployments:
+  - name: Process Text Chunks
+    application: Process Text Chunks
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-transcriptions
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: v1-textchunks
+      - name: chunksize
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 60
+      - name: overlapsize
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 15
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunkster-v5
+  - name: Create Embeddings
+    application: Create Embeddings
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 500
+      memory: 1000
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-summaries
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: v1-embeddings-sbert-all-minilm-l6-v2
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: vectorizer-v4
+      - name: textfield
+        inputType: FreeText
+        description: ''
+        required: false
+        value: summary
+  - name: Ingest Embeddings to Weaviate
+    application: Ingest Embeddings to Weaviate
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-embeddings-sbert-all-minilm-l6-v2
+      - name: collectionname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: DemoTranscriptSummariesFinal
+      - name: weaviate_apikey
+        inputType: Secret
+        description: ''
+        required: true
+        secretKey: weaviate_apikey
+      - name: weaviate_rest_endpoint
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-demo-adk86m6q.weaviate.network
+      - name: vector_dimension
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 384
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: weaviate-ingester-v5d
+  - name: Generate Summaries
+    application: Generate Summaries
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-sections-to-summarize
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: v1-summaries
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: summarizer-v1
+      - name: openai_api_key
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
+      - name: gpt_model
+        inputType: FreeText
+        description: ''
+        required: false
+        value: gpt-4o
+  - name: Ingest to Weaviate via Langchain
+    application: Ingest to Weaviate via Langchain
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-textchunks
+      - name: collectionname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: DemoTranscriptChunksFinal
+      - name: weaviate_apikey
+        inputType: Secret
+        description: ''
+        required: true
+        secretKey: weaviate_apikey
+      - name: weaviate_rest_endpoint
+        inputType: FreeText
+        description: ''
+        required: false
+        value: https://quix-demo-adk86m6q.weaviate.network
+      - name: vector_dimension
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 384
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: weaviate-ingester-v6
+      - name: OPENAI_API_KEY
+        inputType: Secret
+        description: ''
+        required: false
+        secretKey: open_api_key
+      - name: textkey
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunks
+  - name: Create Sections to Summarize
+    application: Create Sections to Summarize
+    version: latest
+    deploymentType: Service
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: v1-transcriptions
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: v1-sections-to-summarize
+      - name: groupname
+        inputType: FreeText
+        description: ''
+        required: false
+        value: chunkster-v1
+      - name: deltaminutes
+        inputType: FreeText
+        description: ''
+        required: false
+        value: 2
+
+# This section describes the Topics of the data pipeline
+topics:
+  - name: trashcan
+  - name: v1-transcriptions
+  - name: v1-textchunks
+  - name: v1-sections-to-summarize
+  - name: v1-summaries
+  - name: v1-embeddings-sbert-all-minilm-l6-v2
+  - name: v2-transcriptions
+  - name: v2-textchunks
+  - name: v2-summaries
+  - name: v2-sections-to-summarize
+  - name: v2-embeddings-sbert-all-minilm-l6-v2
+  - name: v3-transcriptions
+  - name: v3-textchunks
+  - name: v3-summaries
+  - name: v3-sections-to-summarize
+  - name: v3-embeddings-sbert-all-minilm-l6-v2
+  - name: v4-transcriptions-mc
+  - name: v4-textchunks-mc

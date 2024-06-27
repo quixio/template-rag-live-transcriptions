@@ -1,0 +1,31 @@
+name: Generate Summaries
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: Name of the input topic to listen to.
+    defaultValue: segments-to-summarize
+    required: false
+  - name: output
+    inputType: OutputTopic
+    description: Name of the output topic to write to.
+    defaultValue: summaries
+    required: false
+  - name: groupname
+    inputType: FreeText
+    description: ''
+    defaultValue: summarizer-v1
+    required: false
+  - name: openai_api_key
+    inputType: Secret
+    description: ''
+    defaultValue: open_api_key
+    required: false
+  - name: gpt_model
+    inputType: FreeText
+    description: ''
+    defaultValue: gpt-4o
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py

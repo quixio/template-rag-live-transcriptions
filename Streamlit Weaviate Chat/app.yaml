@@ -1,0 +1,31 @@
+name: Streamlit Weaviate Chat
+language: python
+variables:
+  - name: weaviate_rest_endpoint
+    inputType: FreeText
+    description: ''
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
+    required: false
+  - name: weaviate_api_key
+    inputType: Secret
+    description: ''
+    defaultValue: weaviate_apikey
+    required: false
+  - name: collection
+    inputType: FreeText
+    description: ''
+    defaultValue: TranscriptionChunks06J
+    required: false
+  - name: OPENAI_API_KEY
+    inputType: Secret
+    description: ''
+    defaultValue: open_api_key
+    required: false
+  - name: textkey
+    inputType: FreeText
+    description: ''
+    defaultValue: chunks
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py

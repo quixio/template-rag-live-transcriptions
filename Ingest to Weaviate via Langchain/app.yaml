@@ -1,0 +1,46 @@
+name: Ingest to Weaviate via Langchain
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: Name of the input topic to listen to.
+    defaultValue: textchunks-speechmatics-06J
+    required: false
+  - name: collectionname
+    inputType: FreeText
+    description: ''
+    defaultValue: TranscriptLangchainSpeechmatics
+    required: false
+  - name: weaviate_apikey
+    inputType: Secret
+    description: ''
+    defaultValue: weaviate_apikey
+    required: true
+  - name: weaviate_rest_endpoint
+    inputType: FreeText
+    description: ''
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
+    required: false
+  - name: vector_dimension
+    inputType: FreeText
+    description: ''
+    defaultValue: 384
+    required: false
+  - name: groupname
+    inputType: FreeText
+    description: ''
+    defaultValue: weaviate-ingester-v6
+    required: false
+  - name: OPENAI_API_KEY
+    inputType: Secret
+    description: ''
+    defaultValue: open_api_key
+    required: false
+  - name: textkey
+    inputType: FreeText
+    description: ''
+    defaultValue: chunks
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py

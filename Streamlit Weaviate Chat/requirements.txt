@@ -1,0 +1,13 @@
+quixstreams==2.5.1
+streamlit
+python-dotenv
+weaviate-client==4.6.1
+sentence-transformers
+requests
+huggingface-hub==0.21.3
+langchain
+langchain-community
+langchain-core
+langchain-openai
+langchain-text-splitters
+langchain_weaviate

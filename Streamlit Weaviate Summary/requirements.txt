@@ -1,0 +1,5 @@
+quixstreams==2.5.1
+streamlit
+python-dotenv
+weaviate-client==3.26.2
+pandas

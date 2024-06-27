@@ -1,0 +1,26 @@
+name: Streamlit Weaviate Summaries
+language: python
+variables:
+  - name: WEAVIATE_REST_ENDPOINT
+    inputType: FreeText
+    description: ''
+    defaultValue: https://quix-demo-adk86m6q.weaviate.network
+    required: false
+  - name: WEAVIATE_APIKEY
+    inputType: Secret
+    description: ''
+    defaultValue: weaviate_apikey
+    required: false
+  - name: COLLECTIONNAME
+    inputType: FreeText
+    description: ''
+    defaultValue: TranscriptSummariesV2
+    required: false
+  - name: OPENAI_API_KEY
+    inputType: Secret
+    description: ''
+    defaultValue: open_api_key
+    required: false
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
