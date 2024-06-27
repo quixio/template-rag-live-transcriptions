@@ -204,12 +204,12 @@ deployments:
         inputType: InputTopic
         description: Name of the input topic to listen to.
         required: false
-        value: v2-transcriptions
+        value: v1-transcriptions
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: v2-sections-to-summarize
+        value: v1-sections-to-summarize
       - name: groupname
         inputType: FreeText
         description: ''
