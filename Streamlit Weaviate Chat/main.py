@@ -9,8 +9,8 @@ logging.basicConfig(level=logging.INFO)
 from retriever_weaviate import weaviate_retriever
 from full_chain import create_full_chain, ask_question
 
-st.set_page_config(page_title="LangChain & Streamlit RAG")
-st.title("LangChain & Streamlit RAG")
+st.set_page_config(page_title="Weaviate & LangChain RAG")
+st.title("Weaviate & LangChain RAG")
 
 
 def show_ui(qa, prompt_to_user="How may I help you?"):
