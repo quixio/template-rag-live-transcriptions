@@ -97,7 +97,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: https://quix-demo-adk86m6q.weaviate.network
+        value: https://2ihlgouzrqgukyw5rosvta.c0.europe-west3.gcp.weaviate.cloud
       - name: vector_dimension
         inputType: FreeText
         description: ''
