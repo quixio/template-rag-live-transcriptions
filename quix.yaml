@@ -87,7 +87,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: DemoTranscriptSummariesFinal
+        value: artspeak-test
       - name: weaviate_apikey
         inputType: Secret
         description: ''
@@ -97,7 +97,7 @@ deployments:
         inputType: FreeText
         description: ''
         required: false
-        value: https://quix-demo-adk86m6q.weaviate.network
+        value: https://b9oxrzs9t3khjeeg1afhg.c0.europe-west3.gcp.weaviate.cloud
       - name: vector_dimension
         inputType: FreeText
         description: ''
