@@ -14,7 +14,7 @@ variables:
   - name: groupname
     inputType: FreeText
     description: ''
-    defaultValue: summarizer-v1
+    defaultValue: v1-language-evaluator
     required: false
   - name: openai_api_key
     inputType: Secret
