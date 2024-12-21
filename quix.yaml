@@ -191,7 +191,7 @@ deployments:
         description: ''
         required: false
         value: chunks
-  - name: Create Sections to Summarize
+  - name: Create Sections to Assess
     application: Create Sections to Summarize
     version: latest
     deploymentType: Service
